@@ -1,7 +1,7 @@
 ﻿namespace CSV_Enumerable.Models;
 
-internal class Pet
-{
+internal record class Pet
+{ 
     public int Id { get; set; }
 
     public string? Name { get; set; }

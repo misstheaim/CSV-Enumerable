@@ -1,6 +1,6 @@
 ﻿namespace CSV_Enumerable.Models;
 
-internal class Person
+internal record class Person
 {
     public int Id { get; set; }
 
