@@ -1,4 +1,5 @@
-﻿using CSV_Enumerable.Services;
+﻿using CSV_Enumerable.Models;
+using CSV_Enumerable.Services;
 
 namespace CSV_Enumerable;
 
@@ -30,7 +31,7 @@ internal class Program
 
             try
             {
-                var csv = new CsvEnumerable(path);
+                var csv = new CsvEnumerable<Pet>(path);
                 foreach (var item in csv)
                 {
                     Console.WriteLine(item.ToString());

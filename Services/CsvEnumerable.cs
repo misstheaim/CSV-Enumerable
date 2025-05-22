@@ -3,18 +3,18 @@ using System.Collections;
 
 namespace CSV_Enumerable.Services;
 
-internal class CsvEnumerable : IEnumerable<Pet>
+internal class CsvEnumerable<T> : IEnumerable<T> where T : class
 {
-    private string _filePath;
+    private readonly string _filePath;
 
     public CsvEnumerable(string filePath)
     {
         _filePath = filePath;
     }
 
-    public IEnumerator<Pet> GetEnumerator()
+    public IEnumerator<T> GetEnumerator()
     {
-        return new CsvEnumerator(_filePath);
+        return new CsvEnumerator<T>(_filePath);
     }
 
     IEnumerator IEnumerable.GetEnumerator()

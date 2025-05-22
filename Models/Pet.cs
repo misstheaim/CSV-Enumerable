@@ -1,5 +1,9 @@
-﻿namespace CSV_Enumerable.Models;
+﻿using CSV_Enumerable.Attributes;
+using CSV_Enumerable.Mappings;
 
+namespace CSV_Enumerable.Models;
+
+[CsvMap(typeof(PetMap))]
 internal record class Pet
 { 
     public int Id { get; set; }

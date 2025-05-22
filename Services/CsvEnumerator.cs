@@ -1,30 +1,30 @@
-﻿using CSV_Enumerable.Mappings;
-using CSV_Enumerable.Models;
+﻿using CSV_Enumerable.Attributes;
+using CSV_Enumerable.Mappings;
 using CsvHelper;
 using System.Collections;
 using System.Globalization;
-using System.Text;
 
 namespace CSV_Enumerable.Services;
 
-internal class CsvEnumerator : IEnumerator<Pet>
+internal class CsvEnumerator<T> : IEnumerator<T> where T : class
 {
-    private StreamReader _stream;
-    private CsvReader _reader;
-    private Pet? _current;
+    private readonly StreamReader _stream;
+    private readonly CsvReader _reader;
+    private T? _current;
 
     public CsvEnumerator(string filePath)
     {
         _stream = new StreamReader(filePath);
         _reader = new CsvReader(_stream, CultureInfo.InvariantCulture);
 
-        _reader.Context.RegisterClassMap<PetMap>();
+        CsvMapAttribute mapType = (CsvMapAttribute)typeof(T).GetCustomAttributes(typeof(CsvMapAttribute), false).First();
+        _reader.Context.RegisterClassMap(mapType.CsvMapType);
 
         _reader.Read();
         _reader.ReadHeader();
     }
 
-    public Pet Current 
+    public T Current 
     {
         get
         {
@@ -44,7 +44,7 @@ internal class CsvEnumerator : IEnumerator<Pet>
         {
             return false;
         }
-        _current = _reader.GetRecord<Pet>();
+        _current = _reader.GetRecord<T>();
         return true;
     }
 
